@@ -4,9 +4,15 @@
   <head>
     <meta charset="UTF-8" />
     <title>Responsiive Admin Dashboard | CodingLab</title>
+    <!-- svg icons CDN Link-->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity=""
+      crossorigin="anonymous">
     <!-- Boxicons CDN Link -->
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/dashboardstyle.css" />
+    <link rel="stylesheet" href="assets/css/dashboardstyle.css"/>
+    <link rel="stylesheet" href="assets/css/footer.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
@@ -683,9 +689,59 @@
                   </div>
               </div>
           </div>
-      </div>
-  </section>
 
+           <!-- ===== Popup Footer ===== -->
+<!-- Floating Footer Button -->
+<div class="footer-fab" id="footerFab">
+    <img src="assets/img/tts-logo-removebg-preview.png" alt="TTS" />
+  </div>
+  
+  <!-- Popup Footer -->
+  <footer id="popupFooter">
+    <div class="footer-container">
+      <div class="footer-col about">
+        <h3>TechnoKraft <br><span>Training & Solution Pvt. Ltd.</span></h3>
+        <p>Empowering careers through innovative technical training and real-world IT solutions. Building the next generation of developers, testers, and professionals.</p>
+      </div>
+  
+      <div class="footer-col contact">
+        <h4>Contact Us</h4>
+        <ul>
+          <li><i class="fa-solid fa-phone"></i> 08645628278</li>
+          <li><i class="fa-solid fa-envelope"></i> info@tts.net.in</li>
+          <li><i class="fa-solid fa-clock"></i> 09:30 am - 08:30 pm</li>
+          <li><i class="fa-solid fa-location-dot"></i> 1st Floor, Kanchwala Avenue, Above Viju’s Dabeli,<br>Thatte Nagar Marg, College Road, Nashik, Maharashtra 422005</li>
+        </ul>
+      </div>
+  
+      <div class="footer-col links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Placements</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-col social">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/company/technokraft-training" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://www.youtube.com/@technokrafttraining" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.instagram.com/technokraft_training" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  
+    <div class="footer-bottom">
+      © 2025 TechnoKraft Training & Solution Pvt. Ltd. | All Rights Reserved
+    </div>
+  </footer>  
+  
+      </div>
+  
+  </section>
   <!-- Add Student Modal -->
   <div id="addStudentModal" class="modal">
       <div class="modal-content">
@@ -778,6 +834,7 @@
       </div>
   </div>
 
+  <!-- JavaScript -->
 <script>
          // Sidebar toggle
          let sidebar = document.querySelector(".sidebar");
@@ -868,5 +925,7 @@
             }
         });
     </script>
+
+    <script src="assets/js/footer.js"></script>
   </body>
 </html>

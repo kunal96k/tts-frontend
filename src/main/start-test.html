@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="assets/css/start-test.css">
 </head>
 <body>
+    
     <!-- Test Start Screen -->
     <div class="test-start-screen" id="startScreen">
         <div class="start-card">
             <h1>Java Programming Final Test</h1>
             <p>Complete assessment of Java programming concepts</p>
-
             <div class="test-info-grid">
                 <div class="info-item">
                     <i class='bx bx-question-mark'></i>
@@ -44,7 +44,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="instructions">
                 <h3><i class='bx bx-info-circle'></i> Important Instructions</h3>
                 <ul>
@@ -56,7 +55,6 @@
                     <li>Review all answers before final submission</li>
                 </ul>
             </div>
-
             <button class="btn btn-primary" onclick="startTest()">
                 <i class='bx bx-play'></i> Start Test in Fullscreen
             </button>
@@ -83,7 +81,6 @@
         </div>
 
         <div class="test-layout">
-            <!-- Left Sidebar -->
             <div class="question-sidebar">
                 <div class="nav-title">Questions</div>
                 <div class="question-grid" id="questionNav"></div>
@@ -103,10 +100,8 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
             <div class="test-content">
                 <div id="questionContainer"></div>
-
                 <div class="navigation-buttons">
                     <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">
                         <i class='bx bx-chevron-left'></i> Previous
@@ -126,26 +121,88 @@
     <div class="result-screen" id="resultScreen">
         <div class="result-container">
             <div class="result-header">
+                <div class="report-badge">
+                    <i class='bx bx-bar-chart-alt-2'></i>
+                    <span>Performance Report</span>
+                </div>
+                
                 <div class="institute-header">
                     <div class="institute-logo">
-                        <i class='bx bx-building'></i>
+                       <img src="assets/img/tts-logo-removebg-preview.png" alt="tts">
                     </div>
                     <div class="institute-info">
-                        <h3>Tech Learning Institute</h3>
+                        <h3>TechnoKraft</h3>
+                        <h5>Training & Solution Pvt. Ltd.</h5>
                         <p>Online Assessment Platform</p>
                     </div>
                 </div>
                 
-                <div class="result-status">Test Completed Successfully</div>
-                
-                <div class="score-container">
-                    <div class="score-display" id="scoreValue">85</div>
-                    <div class="score-fraction">
-                        Marks Obtained: <strong id="marksObtained">25</strong> / <strong id="totalMarks">30</strong>
+                <div class="test-metadata">
+                    <div class="meta-item">
+                        <i class='bx bx-calendar'></i>
+                        <div>
+                            <span class="meta-label">Test Date</span>
+                            <span class="meta-value" id="testDate"></span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class='bx bx-id-card'></i>
+                        <div>
+                            <span class="meta-label">Report ID</span>
+                            <span class="meta-value" id="assessmentId"></span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class='bx bx-book-open'></i>
+                        <div>
+                            <span class="meta-label">Assessment</span>
+                            <span class="meta-value">Java Programming</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="result-verdict pass" id="verdict">✓ PASSED</div>
+                <div class="score-summary-box">
+                    <div class="score-left">
+                        <div class="score-circle">
+                            <svg viewBox="0 0 200 200">
+                                <circle cx="100" cy="100" r="90" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+                                <circle id="scoreCircle" cx="100" cy="100" r="90" fill="none" stroke="url(#gradient)" 
+                                        stroke-width="12" stroke-linecap="round" 
+                                        stroke-dasharray="565.48" stroke-dashoffset="565.48"
+                                        transform="rotate(-90 100 100)"/>
+                                <defs>
+                                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#667eea"/>
+                                        <stop offset="100%" style="stop-color:#764ba2"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-display" id="scoreValue">85</div>
+                                <div class="score-percent">%</div>
+                            </div>
+                        </div>
+                        <div class="score-subtitle">Overall Score</div>
+                    </div>
+                    
+                    <div class="score-right">
+                        <div class="score-detail-item">
+                            <span class="detail-label">Marks Obtained</span>
+                            <span class="detail-value"><strong id="marksObtained">25</strong> / <strong id="totalMarks">30</strong></span>
+                        </div>
+                        <div class="score-detail-item">
+                            <span class="detail-label">Grade</span>
+                            <span class="detail-value grade-display" id="gradeBadge">A</span>
+                        </div>
+                        <div class="score-detail-item">
+                            <span class="detail-label">Status</span>
+                            <div class="result-verdict pass" id="verdict">
+                                <i class='bx bx-check-circle'></i>
+                                PASSED
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="result-stats">
@@ -201,6 +258,9 @@
         </div>
     </div>
 
+
 <script src="assets/js/start-test.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
+

@@ -41,7 +41,7 @@ function startTest() {
 function enterFullscreen() {
     const elem = document.documentElement;
     if (elem.requestFullscreen) {
-        elem.requestFullscreen();
+        elem.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
     } else if (elem.webkitRequestFullscreen) {
         elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) {
@@ -51,7 +51,7 @@ function enterFullscreen() {
 
 function exitFullscreen() {
     if (document.exitFullscreen) {
-        document.exitFullscreen();
+        document.exitFullscreen().catch(err => console.log('Exit fullscreen error:', err));
     } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) {
@@ -60,22 +60,22 @@ function exitFullscreen() {
 }
 
 function setupFullscreenDetection() {
+    const handleFullscreenChange = () => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+            !document.mozFullScreenElement && testState.isTestActive && !testState.fullscreenExited) {
+            testState.fullscreenExited = true;
+            testState.tabSwitches++;
+            showWarningBanner();
+            
+            if (testState.tabSwitches >= testConfig.tabSwitchLimit) {
+                autoSubmitTest('Fullscreen exit limit exceeded');
+            }
+        }
+    };
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
     document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-}
-
-function handleFullscreenChange() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement && 
-        !document.mozFullScreenElement && testState.isTestActive && !testState.fullscreenExited) {
-        testState.fullscreenExited = true;
-        testState.tabSwitches++;
-        showWarningBanner();
-        
-        if (testState.tabSwitches >= testConfig.tabSwitchLimit) {
-            autoSubmitTest('Fullscreen exit limit exceeded');
-        }
-    }
 }
 
 function initializeTest() {
@@ -132,10 +132,6 @@ function saveAnswer(questionId, optionIndex) {
     labels.forEach(label => label.classList.remove('selected'));
     event.target.closest('.option').classList.add('selected');
     
-    renderQuestionNavigator();
-}
-
-function updateQuestionNavigator() {
     renderQuestionNavigator();
 }
 
@@ -213,7 +209,7 @@ function showWarningBanner() {
 }
 
 function setupTabSwitchDetection() {
-    let tabSwitchHandler = function() {
+    const tabSwitchHandler = function() {
         if (document.hidden && testState.isTestActive) {
             testState.tabSwitches++;
             showWarningBanner();
@@ -270,27 +266,36 @@ function calculateResults() {
             reviewData.push({
                 questionNum: q.id,
                 question: q.question,
+                options: q.options,
                 status: 'unanswered',
                 userAnswer: 'Not answered',
-                correctAnswer: q.options[q.correctAnswer]
+                userAnswerIndex: null,
+                correctAnswer: q.options[q.correctAnswer],
+                correctAnswerIndex: q.correctAnswer
             });
         } else if (userAnswer === q.correctAnswer) {
             correct++;
             reviewData.push({
                 questionNum: q.id,
                 question: q.question,
+                options: q.options,
                 status: 'correct',
                 userAnswer: q.options[userAnswer],
-                correctAnswer: q.options[q.correctAnswer]
+                userAnswerIndex: userAnswer,
+                correctAnswer: q.options[q.correctAnswer],
+                correctAnswerIndex: q.correctAnswer
             });
         } else {
             wrong++;
             reviewData.push({
                 questionNum: q.id,
                 question: q.question,
+                options: q.options,
                 status: 'incorrect',
                 userAnswer: q.options[userAnswer],
-                correctAnswer: q.options[q.correctAnswer]
+                userAnswerIndex: userAnswer,
+                correctAnswer: q.options[q.correctAnswer],
+                correctAnswerIndex: q.correctAnswer
             });
         }
     });
@@ -313,10 +318,34 @@ function calculateResults() {
     };
 }
 
+function getGrade(score) {
+    if (score >= 90) return 'A+';
+    if (score >= 80) return 'A';
+    if (score >= 70) return 'B';
+    if (score >= 60) return 'C';
+    return 'F';
+}
+
 function showResults(results) {
     document.getElementById('testScreen').style.display = 'none';
     document.getElementById('resultScreen').style.display = 'block';
     window.scrollTo(0, 0);
+    
+    // Set test date and ID
+    const now = new Date();
+    document.getElementById('testDate').textContent = now.toLocaleDateString('en-US', { 
+        year: 'numeric', month: 'short', day: 'numeric' 
+    });
+    document.getElementById('assessmentId').textContent = 'TTS-' + now.getTime().toString().slice(-8);
+    
+    // Animate score circle
+    const scoreCircle = document.getElementById('scoreCircle');
+    const circumference = 565.48;
+    const offset = circumference - (results.score / 100) * circumference;
+    setTimeout(() => {
+        scoreCircle.style.transition = 'stroke-dashoffset 1.5s ease-in-out';
+        scoreCircle.style.strokeDashoffset = offset;
+    }, 100);
     
     document.getElementById('scoreValue').textContent = results.score;
     document.getElementById('marksObtained').textContent = results.marksObtained;
@@ -326,9 +355,17 @@ function showResults(results) {
     document.getElementById('unansweredCount').textContent = results.unanswered;
     document.getElementById('timeTaken').textContent = results.timeTaken;
     
+    // Set grade
+    document.getElementById('gradeBadge').textContent = getGrade(results.score);
+    
     const verdict = document.getElementById('verdict');
-    verdict.textContent = results.passed ? '✓ PASSED' : '✗ FAILED';
-    verdict.className = `result-verdict ${results.passed ? 'pass' : 'fail'}`;
+    if (results.passed) {
+        verdict.innerHTML = '<i class="bx bx-check-circle"></i> PASSED';
+        verdict.className = 'result-verdict pass';
+    } else {
+        verdict.innerHTML = '<i class="bx bx-x-circle"></i> FAILED';
+        verdict.className = 'result-verdict fail';
+    }
     
     renderAnswerReview(results.reviewData);
 }
@@ -387,7 +424,167 @@ function filterReview(filter) {
 }
 
 function downloadPDF() {
-    alert('PDF Report is being generated and will download shortly.\n\nReport includes:\n• Score Summary\n• Question-wise Analysis\n• Time Taken\n• Performance Metrics\n• Institute Certificate');
+    if (typeof jspdf === 'undefined' || !jspdf.jsPDF) {
+        alert('PDF library is loading. Please try again in a moment.');
+        return;
+    }
+
+    const { jsPDF } = jspdf;
+    const doc = new jsPDF();
+    
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    let yPos = 20;
+
+    // Header
+    doc.setFillColor(102, 126, 234);
+    doc.rect(0, 0, pageWidth, 40, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont(undefined, 'bold');
+    doc.text('TechnoKraft', pageWidth / 2, 18, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'normal');
+    doc.text('Training & Solution Pvt. Ltd.', pageWidth / 2, 28, { align: 'center' });
+    doc.text('Test Performance Report', pageWidth / 2, 35, { align: 'center' });
+
+    yPos = 50;
+    doc.setTextColor(0, 0, 0);
+
+    // Test Information
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text('Test Information', 14, yPos);
+    yPos += 10;
+
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'normal');
+    const testDate = document.getElementById('testDate').textContent;
+    const assessmentId = document.getElementById('assessmentId').textContent;
+    
+    doc.text(`Test Date: ${testDate}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Assessment ID: ${assessmentId}`, 14, yPos);
+    yPos += 7;
+    doc.text('Assessment: Java Programming Final Test', 14, yPos);
+    yPos += 15;
+
+    // Performance Summary
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text('Performance Summary', 14, yPos);
+    yPos += 10;
+
+    const score = document.getElementById('scoreValue').textContent;
+    const marksObtained = document.getElementById('marksObtained').textContent;
+    const totalMarks = document.getElementById('totalMarks').textContent;
+    const correct = document.getElementById('correctCount').textContent;
+    const wrong = document.getElementById('wrongCount').textContent;
+    const unanswered = document.getElementById('unansweredCount').textContent;
+    const timeTaken = document.getElementById('timeTaken').textContent;
+    const grade = document.getElementById('gradeBadge').textContent;
+    const verdict = document.getElementById('verdict').textContent.trim();
+
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'normal');
+    
+    doc.text(`Score: ${score}%`, 14, yPos);
+    yPos += 7;
+    doc.text(`Marks: ${marksObtained} / ${totalMarks}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Grade: ${grade}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Status: ${verdict}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Correct Answers: ${correct}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Wrong Answers: ${wrong}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Unanswered: ${unanswered}`, 14, yPos);
+    yPos += 7;
+    doc.text(`Time Taken: ${timeTaken}`, 14, yPos);
+    yPos += 15;
+
+    // Detailed Analysis
+    if (yPos > pageHeight - 30) {
+        doc.addPage();
+        yPos = 20;
+    }
+
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text('Detailed Question Analysis', 14, yPos);
+    yPos += 10;
+
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+
+    allReviewData.forEach((item, index) => {
+        if (yPos > pageHeight - 50) {
+            doc.addPage();
+            yPos = 20;
+        }
+
+        // Question header with status
+        doc.setFont(undefined, 'bold');
+        const statusText = item.status === 'correct' ? '✓ Correct' : 
+                         item.status === 'incorrect' ? '✗ Incorrect' : '○ Unanswered';
+        
+        if (item.status === 'correct') {
+            doc.setTextColor(16, 185, 129);
+        } else if (item.status === 'incorrect') {
+            doc.setTextColor(239, 68, 68);
+        } else {
+            doc.setTextColor(245, 158, 11);
+        }
+        
+        doc.text(`Q${item.questionNum}: ${statusText}`, 14, yPos);
+        doc.setTextColor(0, 0, 0);
+        yPos += 6;
+
+        // Question text
+        doc.setFont(undefined, 'normal');
+        const questionLines = doc.splitTextToSize(item.question, pageWidth - 28);
+        doc.text(questionLines, 14, yPos);
+        yPos += questionLines.length * 5 + 3;
+
+        // Your answer
+        doc.setFont(undefined, 'bold');
+        doc.text('Your Answer:', 14, yPos);
+        yPos += 5;
+        
+        doc.setFont(undefined, 'normal');
+        const answerLines = doc.splitTextToSize(item.userAnswer, pageWidth - 28);
+        doc.text(answerLines, 14, yPos);
+        yPos += answerLines.length * 5 + 3;
+
+        // Correct answer (if wrong or unanswered)
+        if (item.status !== 'correct') {
+            doc.setFont(undefined, 'bold');
+            doc.text('Correct Answer:', 14, yPos);
+            yPos += 5;
+            
+            doc.setFont(undefined, 'normal');
+            const correctLines = doc.splitTextToSize(item.correctAnswer, pageWidth - 28);
+            doc.text(correctLines, 14, yPos);
+            yPos += correctLines.length * 5 + 3;
+        }
+
+        yPos += 5;
+    });
+
+    // Footer on last page
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    doc.text('Generated by TechnoKraft Online Assessment Platform', pageWidth / 2, pageHeight - 10, { align: 'center' });
+
+    // Save the PDF
+    const fileName = `Test_Report_${assessmentId}.pdf`;
+    doc.save(fileName);
+    
+    alert('PDF Report downloaded successfully!');
 }
 
 function emailReport() {
@@ -401,10 +598,11 @@ function emailReport() {
 
 function backToDashboard() {
     if (confirm('Are you sure you want to return to dashboard?')) {
-        window.location.href = 'student-dashboard.html';
+        location.reload();
     }
 }
 
+// Security measures
 document.addEventListener('contextmenu', function(e) {
     if (testState.isTestActive) {
         e.preventDefault();
