@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Test - Test Portal</title>
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/start-test.css">
+</head>
+<body>
+    <!-- Test Start Screen -->
+    <div class="test-start-screen" id="startScreen">
+        <div class="start-card">
+            <h1>Java Programming Final Test</h1>
+            <p>Complete assessment of Java programming concepts</p>
+
+            <div class="test-info-grid">
+                <div class="info-item">
+                    <i class='bx bx-question-mark'></i>
+                    <div>
+                        <h4>Total Questions</h4>
+                        <p>30</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class='bx bx-time'></i>
+                    <div>
+                        <h4>Duration</h4>
+                        <p>30 Minutes</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class='bx bx-trophy'></i>
+                    <div>
+                        <h4>Passing Marks</h4>
+                        <p>60%</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class='bx bx-edit'></i>
+                    <div>
+                        <h4>Marks per Question</h4>
+                        <p>1 Mark</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3><i class='bx bx-info-circle'></i> Important Instructions</h3>
+                <ul>
+                    <li>Test will automatically enter fullscreen mode when started</li>
+                    <li>You have <strong>3 attempts</strong> to switch tabs - after that, test will auto-submit</li>
+                    <li>Timer will countdown from 30 minutes - test auto-submits when time expires</li>
+                    <li>Click on question numbers in the left sidebar to navigate</li>
+                    <li>Green indicates answered questions, gray indicates unanswered</li>
+                    <li>Review all answers before final submission</li>
+                </ul>
+            </div>
+
+            <button class="btn btn-primary" onclick="startTest()">
+                <i class='bx bx-play'></i> Start Test in Fullscreen
+            </button>
+        </div>
+    </div>
+
+    <!-- Test Screen -->
+    <div class="test-screen" id="testScreen">
+        <div class="test-header">
+            <div class="test-title">
+                <h2>Java Programming Final Test</h2>
+                <p>Answer all questions carefully</p>
+            </div>
+            <div class="timer-display">
+                <div class="timer-label">Time Remaining</div>
+                <div class="timer-value" id="timerValue">30:00</div>
+            </div>
+        </div>
+
+        <div class="warning-banner" id="warningBanner">
+            <div class="warning-text">
+                ⚠️ WARNING: Tab switching detected! You have <span id="attemptsLeft">3</span> attempts remaining. After 3 attempts, your test will be automatically submitted. ⚠️
+            </div>
+        </div>
+
+        <div class="test-layout">
+            <!-- Left Sidebar -->
+            <div class="question-sidebar">
+                <div class="nav-title">Questions</div>
+                <div class="question-grid" id="questionNav"></div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-box"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box answered"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box current"></div>
+                        <span>Current</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="test-content">
+                <div id="questionContainer"></div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">
+                        <i class='bx bx-chevron-left'></i> Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn">
+                        Next <i class='bx bx-chevron-right'></i>
+                    </button>
+                    <button class="btn btn-success" onclick="submitTest()" id="submitBtn" style="display: none;">
+                        <i class='bx bx-check'></i> Submit Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="result-screen" id="resultScreen">
+        <div class="result-container">
+            <div class="result-header">
+                <div class="institute-header">
+                    <div class="institute-logo">
+                        <i class='bx bx-building'></i>
+                    </div>
+                    <div class="institute-info">
+                        <h3>Tech Learning Institute</h3>
+                        <p>Online Assessment Platform</p>
+                    </div>
+                </div>
+                
+                <div class="result-status">Test Completed Successfully</div>
+                
+                <div class="score-container">
+                    <div class="score-display" id="scoreValue">85</div>
+                    <div class="score-fraction">
+                        Marks Obtained: <strong id="marksObtained">25</strong> / <strong id="totalMarks">30</strong>
+                    </div>
+                </div>
+                
+                <div class="result-verdict pass" id="verdict">✓ PASSED</div>
+            </div>
+
+            <div class="result-stats">
+                <div class="stat-card">
+                    <i class='bx bx-check-circle stat-icon correct'></i>
+                    <div class="stat-value" id="correctCount">25</div>
+                    <div class="stat-label">Correct Answers</div>
+                </div>
+                <div class="stat-card">
+                    <i class='bx bx-x-circle stat-icon wrong'></i>
+                    <div class="stat-value" id="wrongCount">3</div>
+                    <div class="stat-label">Wrong Answers</div>
+                </div>
+                <div class="stat-card">
+                    <i class='bx bx-help-circle stat-icon unanswered'></i>
+                    <div class="stat-value" id="unansweredCount">2</div>
+                    <div class="stat-label">Unanswered</div>
+                </div>
+                <div class="stat-card">
+                    <i class='bx bx-time stat-icon time'></i>
+                    <div class="stat-value" id="timeTaken">28:45</div>
+                    <div class="stat-label">Time Taken</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <h3>Report Actions</h3>
+                <div class="button-grid">
+                    <button class="btn btn-primary" onclick="downloadPDF()">
+                        <i class='bx bx-download'></i> Download PDF
+                    </button>
+                    <button class="btn btn-success" onclick="emailReport()">
+                        <i class='bx bx-envelope'></i> Email Report
+                    </button>
+                    <button class="btn btn-secondary" onclick="backToDashboard()">
+                        <i class='bx bx-home'></i> Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <div class="detailed-report">
+                <div class="report-header">
+                    <h3>Detailed Answer Review</h3>
+                </div>
+                <div class="review-filters">
+                    <button class="filter-btn active" onclick="filterReview('all')">All Questions</button>
+                    <button class="filter-btn" onclick="filterReview('correct')">Correct</button>
+                    <button class="filter-btn" onclick="filterReview('incorrect')">Incorrect</button>
+                    <button class="filter-btn" onclick="filterReview('unanswered')">Unanswered</button>
+                </div>
+                <div id="answerReview"></div>
+            </div>
+        </div>
+    </div>
+
+<script src="assets/js/start-test.js"></script>
+</body>
+</html>

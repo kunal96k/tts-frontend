@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Test Portal</title>
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/student-dashboard.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <img src="assets/img/tts-logo-removebg-preview.png" alt="">
+            <span class="logo_name">TechnoKraft<p class="sub-title">Training & Solution PVT. LTD.</p></span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#" class="active" onclick="showSection('dashboard')">
+                    <i class="bx bx-grid-alt"></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showSection('tests')">
+                    <i class="bx bx-file"></i>
+                    <span class="links_name">Available Tests</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showSection('results')">
+                    <i class="bx bx-bar-chart-alt-2"></i>
+                    <span class="links_name">My Results</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showSection('profile')">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name">My Profile</span>
+                </a>
+            </li>
+            <li class="log_out">
+                <a href="#">
+                    <i class="bx bx-log-out"></i>
+                    <span class="links_name">Log out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <section class="home-section">
+        <nav>
+            <div class="sidebar-button">
+                <i class="bx bx-menu sidebarBtn"></i>
+                <span class="dashboard">Student Dashboard</span>
+            </div>
+            <div class="profile-details" onclick="toggleProfileDropdown()">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%230A2558' width='40' height='40'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='18' text-anchor='middle' dy='.3em'%3ERS%3C/text%3E%3C/svg%3E" alt="" />
+                <span class="admin_name">Rahul Sharma</span>
+                <i class="bx bx-chevron-down"></i>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="showSection('profile')"><i class="bx bx-user"></i> My Profile</a>
+                    <a href="#"><i class="bx bx-help-circle"></i> Help</a>
+                    <a href="#"><i class="bx bx-log-out"></i> Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="home-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="section-content">
+                <div class="overview-boxes">
+                    <div class="box">
+                        <div class="left-side">
+                            <div class="box-topic">Tests Completed</div>
+                            <div class="number">12</div>
+                            <div class="indicator">
+                                <i class="bx bx-up-arrow-alt"></i>
+                                <span class="text">3 this month</span>
+                            </div>
+                        </div>
+                        <i class="bx bx-file cart"></i>
+                    </div>
+                    <div class="box">
+                        <div class="left-side">
+                            <div class="box-topic">Average Score</div>
+                            <div class="number">82.5%</div>
+                            <div class="indicator">
+                                <i class="bx bx-up-arrow-alt"></i>
+                                <span class="text">+5% improvement</span>
+                            </div>
+                        </div>
+                        <i class="bx bx-trophy cart two"></i>
+                    </div>
+                    <div class="box">
+                        <div class="left-side">
+                            <div class="box-topic">Tests Passed</div>
+                            <div class="number">10/12</div>
+                            <div class="indicator">
+                                <i class="bx bx-up-arrow-alt"></i>
+                                <span class="text">83.3% pass rate</span>
+                            </div>
+                        </div>
+                        <i class="bx bx-check-circle cart three"></i>
+                    </div>
+                    <div class="box">
+                        <div class="left-side">
+                            <div class="box-topic">Available Tests</div>
+                            <div class="number">4</div>
+                            <div class="indicator">
+                                <i class="bx bx-up-arrow-alt"></i>
+                                <span class="text">New tests added</span>
+                            </div>
+                        </div>
+                        <i class="bx bx-book-open cart four"></i>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Quick Actions</h2>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <button class="btn btn-primary" onclick="showSection('tests')" style="justify-content: center; padding: 20px;">
+                            <i class="bx bx-file"></i> Take a Test
+                        </button>
+                        <button class="btn btn-success" onclick="showSection('results')" style="justify-content: center; padding: 20px;">
+                            <i class="bx bx-bar-chart-alt-2"></i> View Results
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Activity</h2>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Java Programming</td>
+                                <td>85/100</td>
+                                <td><span class="status-badge status-pass">Pass</span></td>
+                                <td>Oct 04, 2025</td>
+                            </tr>
+                            <tr>
+                                <td>Python MCQ</td>
+                                <td>92/100</td>
+                                <td><span class="status-badge status-pass">Pass</span></td>
+                                <td>Oct 03, 2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Available Tests Section -->
+            <div id="tests-section" class="section-content" style="display: none;">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Available Tests</h2>
+                    </div>
+                    
+                    <div class="test-card">
+                        <div class="test-info">
+                            <div class="test-icon">
+                                <i class="bx bxl-java"></i>
+                            </div>
+                            <div class="test-details">
+                                <h4>Java Programming Final Test</h4>
+                                <p>Test your Java programming knowledge</p>
+                                <div class="test-meta">
+                                    <span><i class="bx bx-question-mark"></i> 30 Questions</span>
+                                    <span><i class="bx bx-time"></i> 45 Minutes</span>
+                                    <span><i class="bx bx-trophy"></i> Pass: 60%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="startTest('Java Programming', 30, 45)">
+                            <i class="bx bx-play"></i> Start Test
+                        </button>
+                    </div>
+
+                    <div class="test-card">
+                        <div class="test-info">
+                            <div class="test-icon">
+                                <i class="bx bxl-python"></i>
+                            </div>
+                            <div class="test-details">
+                                <h4>Python MCQ Test</h4>
+                                <p>Multiple choice questions on Python basics</p>
+                                <div class="test-meta">
+                                    <span><i class="bx bx-question-mark"></i> 25 Questions</span>
+                                    <span><i class="bx bx-time"></i> 30 Minutes</span>
+                                    <span><i class="bx bx-trophy"></i> Pass: 60%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="startTest('Python MCQ', 25, 30)">
+                            <i class="bx bx-play"></i> Start Test
+                        </button>
+                    </div>
+
+                    <div class="test-card">
+                        <div class="test-info">
+                            <div class="test-icon">
+                                <i class="bx bx-data"></i>
+                            </div>
+                            <div class="test-details">
+                                <h4>Data Structures & Algorithms</h4>
+                                <p>Comprehensive DSA assessment</p>
+                                <div class="test-meta">
+                                    <span><i class="bx bx-question-mark"></i> 40 Questions</span>
+                                    <span><i class="bx bx-time"></i> 60 Minutes</span>
+                                    <span><i class="bx bx-trophy"></i> Pass: 65%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="startTest('Data Structures', 40, 60)">
+                            <i class="bx bx-play"></i> Start Test
+                        </button>
+                    </div>
+
+                    <div class="test-card">
+                        <div class="test-info">
+                            <div class="test-icon">
+                                <i class="bx bx-code-alt"></i>
+                            </div>
+                            <div class="test-details">
+                                <h4>Web Development Fundamentals</h4>
+                                <p>HTML, CSS, and JavaScript basics</p>
+                                <div class="test-meta">
+                                    <span><i class="bx bx-question-mark"></i> 20 Questions</span>
+                                    <span><i class="bx bx-time"></i> 35 Minutes</span>
+                                    <span><i class="bx bx-trophy"></i> Pass: 60%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="startTest('Web Development', 20, 35)">
+                            <i class="bx bx-play"></i> Start Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Results Section -->
+            <div id="results-section" class="section-content" style="display: none;">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">My Test Results</h2>
+                        <button class="btn btn-success" onclick="downloadAllResults()">
+                            <i class="bx bx-download"></i> Download All Reports
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Status</th>
+                                <th>Time Taken</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Java Programming</td>
+                                <td>85/100</td>
+                                <td><span class="status-badge status-pass">Pass</span></td>
+                                <td>42 min</td>
+                                <td>Oct 04, 2025</td>
+                                <td>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button class="btn btn-primary" style="padding: 8px 12px;" onclick="viewDetailedResult('Java Programming', 85, 'Pass')">
+                                            <i class="bx bx-show"></i>
+                                        </button>
+                                        <button class="btn btn-success" style="padding: 8px 12px;" onclick="downloadResult('Java Programming')">
+                                            <i class="bx bx-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Python MCQ</td>
+                                <td>92/100</td>
+                                <td><span class="status-badge status-pass">Pass</span></td>
+                                <td>28 min</td>
+                                <td>Oct 03, 2025</td>
+                                <td>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button class="btn btn-primary" style="padding: 8px 12px;" onclick="viewDetailedResult('Python MCQ', 92, 'Pass')">
+                                            <i class="bx bx-show"></i>
+                                        </button>
+                                        <button class="btn btn-success" style="padding: 8px 12px;" onclick="downloadResult('Python MCQ')">
+                                            <i class="bx bx-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Data Structures</td>
+                                <td>58/100</td>
+                                <td><span class="status-badge status-fail">Fail</span></td>
+                                <td>55 min</td>
+                                <td>Oct 01, 2025</td>
+                                <td>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button class="btn btn-primary" style="padding: 8px 12px;" onclick="viewDetailedResult('Data Structures', 58, 'Fail')">
+                                            <i class="bx bx-show"></i>
+                                        </button>
+                                        <button class="btn btn-success" style="padding: 8px 12px;" onclick="downloadResult('Data Structures')">
+                                            <i class="bx bx-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Web Development</td>
+                                <td>78/100</td>
+                                <td><span class="status-badge status-pass">Pass</span></td>
+                                <td>32 min</td>
+                                <td>Sep 28, 2025</td>
+                                <td>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button class="btn btn-primary" style="padding: 8px 12px;" onclick="viewDetailedResult('Web Development', 78, 'Pass')">
+                                            <i class="bx bx-show"></i>
+                                        </button>
+                                        <button class="btn btn-success" style="padding: 8px 12px;" onclick="downloadResult('Web Development')">
+                                            <i class="bx bx-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- My Profile Section -->
+            <div id="profile-section" class="section-content" style="display: none;">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">My Profile</h2>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px;">
+                        <div style="text-align: center;">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Crect fill='%230A2558' width='150' height='150' rx='12'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='48' text-anchor='middle' dy='.3em'%3ERS%3C/text%3E%3C/svg%3E" style="border-radius: 12px; margin-bottom: 15px;" alt="Profile" />
+                            <h3>Rahul Sharma</h3>
+                            <p style="color: #666;">Student ID: STD-001</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 20px;">Personal Information</h3>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="padding: 10px 0; color: #666;">Email:</td>
+                                    <td style="padding: 10px 0;">rahul.sharma@email.com</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; color: #666;">Registered:</td>
+                                    <td style="padding: 10px 0;">Sep 15, 2025</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; color: #666;">Tests Completed:</td>
+                                    <td style="padding: 10px 0;">12</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; color: #666;">Average Score:</td>
+                                    <td style="padding: 10px 0;">82.5%</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; color: #666;">Pass Rate:</td>
+                                    <td style="padding: 10px 0;">83.3%</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Taking Modal -->
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="testTitle">Test Name</h2>
+                <span class="close" onclick="confirmExitTest()">&times;</span>
+            </div>
+            <div id="testContent"></div>
+        </div>
+    </div>
+
+    <!-- Timer Display (shown during test) -->
+    <div id="testTimer" class="test-timer" style="display: none;">
+        <div class="timer-text">Time Remaining</div>
+        <div class="timer-value" id="timerDisplay">45:00</div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Test Result</h2>
+                <span class="close" onclick="closeModal('resultModal')">&times;</span>
+            </div>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+   <script src="assets/js/student-dashboard.js"></script>
+</body>
+</html>

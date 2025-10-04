@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<!-- Website - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Responsiive Admin Dashboard | CodingLab</title>
+    <!-- Boxicons CDN Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/dashboardstyle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+          <img src="assets/img/tts-logo-removebg-preview.png" alt="">
+          <span class="logo_name">TechnoKraft<p class="sub-title">Training & Solution PVT. LTD.</p></span>
+      </div>
+      <ul class="nav-links">
+          <li>
+              <a href="#" class="active" onclick="showSection('dashboard')">
+                  <i class="bx bx-grid-alt"></i>
+                  <span class="links_name">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" onclick="showSection('students')">
+                  <i class="bx bx-user"></i>
+                  <span class="links_name">Students</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" onclick="showSection('results')">
+                  <i class="bx bx-file"></i>
+                  <span class="links_name">Test Results</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" onclick="showSection('questions')">
+                  <i class="bx bx-question-mark"></i>
+                  <span class="links_name">Question Bank</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" onclick="showSection('subjects')">
+                  <i class="bx bx-book"></i>
+                  <span class="links_name">Subjects</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" onclick="showSection('reports')">
+                  <i class="bx bx-bar-chart-alt-2"></i>
+                  <span class="links_name">Analytics</span>
+              </a>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-cog"></i>
+                  <span class="links_name">Settings</span>
+              </a>
+          </li>
+          <li class="log_out">
+              <a href="#">
+                  <i class="bx bx-log-out"></i>
+                  <span class="links_name">Log out</span>
+              </a>
+          </li>
+      </ul>
+  </div>
+
+  <section class="home-section">
+      <nav>
+          <div class="sidebar-button">
+              <i class="bx bx-menu sidebarBtn"></i>
+              <span class="dashboard">Admin Dashboard</span>
+          </div>
+          <div class="profile-details" onclick="toggleProfileDropdown()">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%230A2558' width='40' height='40'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='18' text-anchor='middle' dy='.3em'%3EA%3C/text%3E%3C/svg%3E" alt="" />
+              <span class="admin_name">Admin</span>
+              <i class="bx bx-chevron-down"></i>
+              <div class="profile-dropdown" id="profileDropdown">
+                  <a href="#"><i class="bx bx-user"></i> My Profile</a>
+                  <a href="#"><i class="bx bx-cog"></i> Settings</a>
+                  <a href="#"><i class="bx bx-help-circle"></i> Help</a>
+                  <a href="#"><i class="bx bx-log-out"></i> Logout</a>
+              </div>
+          </div>
+      </nav>
+
+      <div class="home-content">
+          <!-- Dashboard Section -->
+          <div id="dashboard-section" class="section-content">
+              <div class="overview-boxes">
+                  <div class="box">
+                      <div class="left-side">
+                          <div class="box-topic">Total Students</div>
+                          <div class="number">1,245</div>
+                          <div class="indicator">
+                              <i class="bx bx-up-arrow-alt"></i>
+                              <span class="text">Up from yesterday</span>
+                          </div>
+                      </div>
+                      <i class="bx bx-user cart"></i>
+                  </div>
+                  <div class="box">
+                      <div class="left-side">
+                          <div class="box-topic">Tests Completed</div>
+                          <div class="number">3,842</div>
+                          <div class="indicator">
+                              <i class="bx bx-up-arrow-alt"></i>
+                              <span class="text">Up from yesterday</span>
+                          </div>
+                      </div>
+                      <i class="bx bx-file cart two"></i>
+                  </div>
+                  <div class="box">
+                      <div class="left-side">
+                          <div class="box-topic">Pass Rate</div>
+                          <div class="number">78.5%</div>
+                          <div class="indicator">
+                              <i class="bx bx-up-arrow-alt"></i>
+                              <span class="text">Up from last week</span>
+                          </div>
+                      </div>
+                      <i class="bx bx-trophy cart three"></i>
+                  </div>
+                  <div class="box">
+                      <div class="left-side">
+                          <div class="box-topic">Active Subjects</div>
+                          <div class="number">12</div>
+                          <div class="indicator">
+                              <i class="bx bx-up-arrow-alt"></i>
+                              <span class="text">New subject added</span>
+                          </div>
+                      </div>
+                      <i class="bx bx-book-open cart four"></i>
+                  </div>
+              </div>
+
+              <div class="content-section">
+                  <div class="section-header">
+                      <h2 class="section-title">Recent Test Results</h2>
+                      <button class="btn btn-primary" onclick="showSection('results')">
+                          View All <i class="bx bx-right-arrow-alt"></i>
+                      </button>
+                  </div>
+                  <div class="table-container">
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Student ID</th>
+                                  <th>Name</th>
+                                  <th>Subject</th>
+                                  <th>Score</th>
+                                  <th>Status</th>
+                                  <th>Date</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>STD-001</td>
+                                  <td>Rahul Sharma</td>
+                                  <td>Java Programming</td>
+                                  <td>85/100</td>
+                                  <td><span class="status-badge status-pass">Pass</span></td>
+                                  <td>Oct 04, 2025</td>
+                              </tr>
+                              <tr>
+                                  <td>STD-002</td>
+                                  <td>Priya Patel</td>
+                                  <td>Python MCQ</td>
+                                  <td>92/100</td>
+                                  <td><span class="status-badge status-pass">Pass</span></td>
+                                  <td>Oct 04, 2025</td>
+                              </tr>
+                              <tr>
+                                  <td>STD-003</td>
+                                  <td>Amit Kumar</td>
+                                  <td>Data Structures</td>
+                                  <td>58/100</td>
+                                  <td><span class="status-badge status-fail">Fail</span></td>
+                                  <td>Oct 03, 2025</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Students Section -->
+          <div id="students-section" class="section-content" style="display: none;">
+              <div class="content-section">
+                  <div class="section-header">
+                      <h2 class="section-title">Student Management</h2>
+                      <button class="btn btn-primary" onclick="openModal('addStudentModal')">
+                          <i class="bx bx-plus"></i> Add New Student
+                      </button>
+                  </div>
+                  <div class="search-bar">
+                      <input type="text" placeholder="Search by Student ID or Name..." id="studentSearch">
+                      <button class="btn btn-primary" onclick="searchStudent()">
+                          <i class="bx bx-search"></i> Search
+                      </button>
+                      <button class="btn btn-success" onclick="downloadAllReports()">
+                          <i class="bx bx-download"></i> Export All
+                      </button>
+                  </div>
+                  <div class="table-container">
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Student ID</th>
+                                  <th>Full Name</th>
+                                  <th>Email</th>
+                                  <th>Registered Date</th>
+                                  <th>Tests Taken</th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>STD-001</td>
+                                  <td>Rahul Sharma</td>
+                                  <td>rahul.sharma@email.com</td>
+                                  <td>Sep 15, 2025</td>
+                                  <td>12</td>
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="View Details">
+                                              <i class="bx bx-show"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download Report">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                          <button class="action-btn btn-danger" title="Delete">
+                                              <i class="bx bx-trash"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>STD-002</td>
+                                  <td>Priya Patel</td>
+                                  <td>priya.patel@email.com</td>
+                                  <td>Sep 18, 2025</td>
+                                  <td>8</td>
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="View Details">
+                                              <i class="bx bx-show"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download Report">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                          <button class="action-btn btn-danger" title="Delete">
+                                              <i class="bx bx-trash"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Test Results Section -->
+          <div id="results-section" class="section-content" style="display: none;">
+              <div class="content-section">
+                  <div class="section-header">
+                      <h2 class="section-title">Test Results & Reports</h2>
+                      <button class="btn btn-success" onclick="downloadAllReports()">
+                          <i class="bx bx-download"></i> Download All Reports
+                      </button>
+                  </div>
+                  <div class="search-bar">
+                      <input type="text" placeholder="Search by Student ID or Name...">
+                      <select style="padding: 12px 15px; border: 2px solid #EFEEF1; border-radius: 6px;">
+                          <option>All Subjects</option>
+                          <option>Java Programming</option>
+                          <option>Python MCQ</option>
+                          <option>Data Structures</option>
+                      </select>
+                      <select style="padding: 12px 15px; border: 2px solid #EFEEF1; border-radius: 6px;">
+                          <option>All Status</option>
+                          <option>Pass</option>
+                          <option>Fail</option>
+                      </select>
+                      <button class="btn btn-primary">
+                          <i class="bx bx-filter"></i> Filter
+                      </button>
+                  </div>
+                  <div class="table-container">
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Student ID</th>
+                                  <th>Student Name</th>
+                                  <th>Subject</th>
+                                  <th>Score</th>
+                                  <th>Pass/Fail</th>
+                                  <th>Time Taken</th>
+                                  <th>Date</th>
+                                  <th>Actions</th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>STD-001</td>
+                                  <td>Rahul Sharma</td>
+                                  <td>Java Programming</td>
+                                  <td>85/100</td>
+                                  <td><span class="status-badge status-pass">Pass</span></td>
+                                  <td>45 min</td>
+                                  <td>Oct 04, 2025</td>
+                                  
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="Print Score">
+                                              <i class="bx bx-printer"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download PDF">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>STD-002</td>
+                                  <td>Priya Patel</td>
+                                  <td>Python MCQ</td>
+                                  <td>92/100</td>
+                                  <td><span class="status-badge status-pass">Pass</span></td>
+                                  <td>38 min</td>
+                                  <td>Oct 04, 2025</td>
+                                  
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="Print Score">
+                                              <i class="bx bx-printer"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download PDF">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>STD-003</td>
+                                  <td>Amit Kumar</td>
+                                  <td>Data Structures</td>
+                                  <td>58/100</td>
+                                  <td><span class="status-badge status-fail">Fail</span></td>
+                                  <td>52 min</td>
+                                  <td>Oct 03, 2025</td>
+                                  
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="Print Score">
+                                              <i class="bx bx-printer"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download PDF">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>STD-004</td>
+                                  <td>Sneha Desai</td>
+                                  <td>Java Programming</td>
+                                  <td>76/100</td>
+                                  <td><span class="status-badge status-pass">Pass</span></td>
+                                  <td>42 min</td>
+                                  <td>Oct 03, 2025</td>
+                                  
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="Print Score">
+                                              <i class="bx bx-printer"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download PDF">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Question Bank Section -->
+          <div id="questions-section" class="section-content" style="display: none;">
+              <div class="content-section">
+                  <div class="section-header">
+                      <h2 class="section-title">Question Bank Management</h2>
+                      <button class="btn btn-primary" onclick="openModal('uploadQuestionsModal')">
+                          <i class="bx bx-upload"></i> Upload Questions
+                      </button>
+                  </div>
+                  <div class="table-container">
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Subject</th>
+                                  <th>File Name</th>
+                                  <th>Total Questions</th>
+                                  <th>Last Updated</th>
+                                  <th>Status</th>
+                                  <th>Actions</th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>Java Programming</td>
+                                  <td>java_mcq.csv</td>
+                                  <td>150</td>
+                                  <td>Oct 01, 2025</td>
+                                  <td><span class="status-badge status-pass">Active</span></td>
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="View Questions">
+                                              <i class="bx bx-show"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                        
+                                          <button class="action-btn btn-danger" title="Delete">
+                                              <i class="bx bx-trash"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Python MCQ</td>
+                                  <td>python_mcq.csv</td>
+                                  <td>120</td>
+                                  <td>Sep 28, 2025</td>
+                                  <td><span class="status-badge status-pass">Active</span></td>
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="View Questions">
+                                              <i class="bx bx-show"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                         
+                                          <button class="action-btn btn-danger" title="Delete">
+                                              <i class="bx bx-trash"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Data Structures</td>
+                                  <td>ds_mcq.csv</td>
+                                  <td>180</td>
+                                  <td>Sep 25, 2025</td>
+                                  <td><span class="status-badge status-pass">Active</span></td>
+                                  <td>
+                                      <div class="action-buttons">
+                                          <button class="action-btn btn-primary" title="View Questions">
+                                              <i class="bx bx-show"></i>
+                                          </button>
+                                          <button class="action-btn btn-success" title="Download">
+                                              <i class="bx bx-download"></i>
+                                          </button>
+                                          <button class="action-btn btn-danger" title="Delete">
+                                              <i class="bx bx-trash"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Subjects Section -->
+          <div id="subjects-section" class="section-content" style="display: none;">
+              <div class="content-section">
+                  <div class="section-header">
+                      <h2 class="section-title">Subject Management</h2>
+                      <button class="btn btn-primary" onclick="openModal('addSubjectModal')">
+                          <i class="bx bx-plus"></i> Add New Subject
+                      </button>
+                  </div>
+                  <div class="subject-card">
+                      <div class="subject-info">
+                          <div class="subject-icon">
+                              <i class="bx bxl-java"></i>
+                          </div>
+                          <div class="subject-details">
+                              <h4>Java Programming</h4>
+                              <p>150 Questions • 1,245 Students Enrolled</p>
+                          </div>
+                      </div>
+                      <div class="action-buttons">
+                          <button class="action-btn btn-primary" title="View Details">
+                              <i class="bx bx-show"></i>
+                          </button>
+                          <button class="action-btn btn-secondary" title="Edit">
+                              <i class="bx bx-edit"></i>
+                          </button>
+                          <button class="action-btn btn-danger" title="Delete">
+                              <i class="bx bx-trash"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <div class="subject-card">
+                      <div class="subject-info">
+                          <div class="subject-icon">
+                              <i class="bx bxl-python"></i>
+                          </div>
+                          <div class="subject-details">
+                              <h4>Python MCQ</h4>
+                              <p>120 Questions • 980 Students Enrolled</p>
+                          </div>
+                      </div>
+                      <div class="action-buttons">
+                          <button class="action-btn btn-primary" title="View Details">
+                              <i class="bx bx-show"></i>
+                          </button>
+                          <button class="action-btn btn-secondary" title="Edit">
+                              <i class="bx bx-edit"></i>
+                          </button>
+                          <button class="action-btn btn-danger" title="Delete">
+                              <i class="bx bx-trash"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <div class="subject-card">
+                      <div class="subject-info">
+                          <div class="subject-icon">
+                              <i class="bx bx-data"></i>
+                          </div>
+                          <div class="subject-details">
+                              <h4>Data Structures</h4>
+                              <p>180 Questions • 756 Students Enrolled</p>
+                          </div>
+                      </div>
+                      <div class="action-buttons">
+                          <button class="action-btn btn-primary" title="View Details">
+                              <i class="bx bx-show"></i>
+                          </button>
+                          <button class="action-btn btn-secondary" title="Edit">
+                              <i class="bx bx-edit"></i>
+                          </button>
+                          <button class="action-btn btn-danger" title="Delete">
+                              <i class="bx bx-trash"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <div class="subject-card">
+                      <div class="subject-info">
+                          <div class="subject-icon">
+                              <i class="bx bx-code-alt"></i>
+                          </div>
+                          <div class="subject-details">
+                              <h4>Web Development</h4>
+                              <p>95 Questions • 542 Students Enrolled</p>
+                          </div>
+                      </div>
+                      <div class="action-buttons">
+                          <button class="action-btn btn-primary" title="View Details">
+                              <i class="bx bx-show"></i>
+                          </button>
+                          <button class="action-btn btn-secondary" title="Edit">
+                              <i class="bx bx-edit"></i>
+                          </button>
+                          <button class="action-btn btn-danger" title="Delete">
+                              <i class="bx bx-trash"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Analytics Section -->
+          <div id="reports-section" class="section-content" style="display: none;">
+              <div class="content-section">
+                  <div class="section-header">
+                      <h2 class="section-title">Analytics & Reports</h2>
+                      <button class="btn btn-success">
+                          <i class="bx bx-download"></i> Export Analytics
+                      </button>
+                  </div>
+                  <div class="overview-boxes" style="margin-bottom: 20px;">
+                      <div class="box">
+                          <div class="left-side">
+                              <div class="box-topic">Avg. Score</div>
+                              <div class="number">74.2%</div>
+                              <div class="indicator">
+                                  <i class="bx bx-up-arrow-alt"></i>
+                                  <span class="text">+3.5% this month</span>
+                              </div>
+                          </div>
+                          <i class="bx bx-trending-up cart"></i>
+                      </div>
+                      <div class="box">
+                          <div class="left-side">
+                              <div class="box-topic">Completion Rate</div>
+                              <div class="number">89.3%</div>
+                              <div class="indicator">
+                                  <i class="bx bx-up-arrow-alt"></i>
+                                  <span class="text">+1.2% this month</span>
+                              </div>
+                          </div>
+                          <i class="bx bx-check-circle cart two"></i>
+                      </div>
+                      <div class="box">
+                          <div class="left-side">
+                              <div class="box-topic">Avg. Time</div>
+                              <div class="number">42 min</div>
+                              <div class="indicator">
+                                  <i class="bx bx-down-arrow-alt down"></i>
+                                  <span class="text">-2 min this month</span>
+                              </div>
+                          </div>
+                          <i class="bx bx-time cart three"></i>
+                      </div>
+                      <div class="box">
+                          <div class="left-side">
+                              <div class="box-topic">Top Performer</div>
+                              <div class="number" style="font-size: 18px;">Priya Patel</div>
+                              <div class="indicator">
+                                  <i class="bx bx-up-arrow-alt"></i>
+                                  <span class="text">95.2% avg score</span>
+                              </div>
+                          </div>
+                          <i class="bx bx-crown cart four"></i>
+                      </div>
+                  </div>
+                  <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Subject-wise Performance</h3>
+                  <div class="table-container">
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Subject</th>
+                                  <th>Total Tests</th>
+                                  <th>Avg. Score</th>
+                                  <th>Pass Rate</th>
+                                  <th>Avg. Time</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>Java Programming</td>
+                                  <td>1,245</td>
+                                  <td>78.5%</td>
+                                  <td>82.3%</td>
+                                  <td>44 min</td>
+                              </tr>
+                              <tr>
+                                  <td>Python MCQ</td>
+                                  <td>980</td>
+                                  <td>81.2%</td>
+                                  <td>85.7%</td>
+                                  <td>38 min</td>
+                              </tr>
+                              <tr>
+                                  <td>Data Structures</td>
+                                  <td>756</td>
+                                  <td>68.9%</td>
+                                  <td>71.4%</td>
+                                  <td>48 min</td>
+                              </tr>
+                              <tr>
+                                  <td>Web Development</td>
+                                  <td>542</td>
+                                  <td>75.6%</td>
+                                  <td>79.8%</td>
+                                  <td>40 min</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Add Student Modal -->
+  <div id="addStudentModal" class="modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Add New Student</h2>
+              <span class="close" onclick="closeModal('addStudentModal')">&times;</span>
+          </div>
+          <form>
+              <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" placeholder="Enter full name" required>
+              </div>
+              <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" placeholder="Enter email address" required>
+              </div>
+              <div class="form-group">
+                  <label>Password *</label>
+                  <input type="password" placeholder="Enter password" required>
+              </div>
+              <div class="form-group">
+                  <label>Student ID</label>
+                  <input type="text" placeholder="Auto-generated (STD-XXX)" readonly style="background: #f5f5f5;">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  <i class="bx bx-plus"></i> Create Student
+              </button>
+          </form>
+      </div>
+  </div>
+
+  <!-- Upload Questions Modal -->
+  <div id="uploadQuestionsModal" class="modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Upload Questions</h2>
+              <span class="close" onclick="closeModal('uploadQuestionsModal')">&times;</span>
+          </div>
+          <form>
+              <div class="form-group">
+                  <label>Select Subject *</label>
+                  <select required>
+                      <option value="">Choose a subject</option>
+                      <option>Java Programming</option>
+                      <option>Python MCQ</option>
+                      <option>Data Structures</option>
+                      <option>Web Development</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label>Upload CSV File *</label>
+                  <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                      <i class="bx bx-cloud-upload"></i>
+                      <p style="margin-top: 10px; color: #666;">Click to upload or drag and drop</p>
+                      <p style="font-size: 12px; color: #999; margin-top: 5px;">CSV files only (Max 5MB)</p>
+                  </div>
+                  <input type="file" id="fileInput" accept=".csv" style="display: none;">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  <i class="bx bx-upload"></i> Upload Questions
+              </button>
+          </form>
+      </div>
+  </div>
+
+  <!-- Add Subject Modal -->
+  <div id="addSubjectModal" class="modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Add New Subject</h2>
+              <span class="close" onclick="closeModal('addSubjectModal')">&times;</span>
+          </div>
+          <form>
+              <div class="form-group">
+                  <label>Subject Name *</label>
+                  <input type="text" placeholder="Enter subject name" required>
+              </div>
+              <div class="form-group">
+                  <label>Subject Code *</label>
+                  <input type="text" placeholder="e.g., JAVA-101" required>
+              </div>
+              <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" placeholder="Brief description of the subject">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  <i class="bx bx-plus"></i> Create Subject
+              </button>
+          </form>
+      </div>
+  </div>
+
+<script>
+         // Sidebar toggle
+         let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".sidebarBtn");
+        sidebarBtn.onclick = function() {
+            sidebar.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+            } else {
+                sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            }
+        };
+
+        // Profile dropdown toggle
+        function toggleProfileDropdown() {
+            document.getElementById('profileDropdown').classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-details') && !event.target.closest('.profile-details')) {
+                var dropdown = document.getElementById("profileDropdown");
+                if (dropdown && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        // Section navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-links li a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Add active class to clicked nav link
+            event.target.closest('a').classList.add('active');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
+            }
+        }
+
+        // Search student function
+        function searchStudent() {
+            const searchValue = document.getElementById('studentSearch').value;
+            alert('Searching for: ' + searchValue + '\n(This will be connected to backend)');
+        }
+
+        // Download reports function
+        function downloadAllReports() {
+            alert('Downloading all reports...\n(This will be connected to backend to generate PDF/Excel)');
+        }
+
+        // Print functionality
+        document.querySelectorAll('.bx-printer').forEach(btn => {
+            btn.parentElement.onclick = function() {
+                alert('Print functionality will be implemented with backend');
+            }
+        });
+
+        // Download individual report
+        document.querySelectorAll('.bx-download').forEach(btn => {
+            btn.parentElement.onclick = function(e) {
+                if(e.target.closest('.action-btn')) {
+                    alert('Download report functionality will be implemented with backend');
+                }
+            }
+        });
+    </script>
+  </body>
+</html>
